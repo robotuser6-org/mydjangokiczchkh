@@ -20,10 +20,14 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ['SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False if os.getenv('DEBUG') == 'False' else True
+
+if DEBUG:
+    SECRET_KEY = "ww2aa^#2381%9&2pueqk+0ix=g)7h61##(o*mez6h(@b3a3"
+else:
+    SECRET_KEY = os.environ['SECRET_KEY']
 
 ALLOWED_HOSTS = []
 
@@ -43,6 +47,7 @@ INSTALLED_APPS_THIRD_PARTIES = [
     'rest_framework',
     'rest_framework.authtoken',
     'django_filters',
+    'drf_yasg',
 
     # Health check
     'health_check',
@@ -154,7 +159,7 @@ REST_FRAMEWORK = {
         'oauth2_provider_jwt.authentication.JWTAuthentication',
     ),
     'DEFAULT_PERMISSION_CLASSES': (
-        'api.permissions.AllowOptionsAuthentication',
+        'app.permissions.AllowOptionsAuthentication',
     )
 }
 
