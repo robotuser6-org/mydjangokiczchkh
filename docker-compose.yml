@@ -2,8 +2,8 @@ version: "3.1"
 
 services:
 
-  postgres_django_rest_boilerplate:
-    container_name: postgres_django_rest_boilerplate
+  postgres_db:
+    container_name: postgres_db
     healthcheck:
       test: "pg_isready -h localhost -p 5432 -q -U postgres"
       interval: 3s
@@ -11,34 +11,34 @@ services:
       retries: 5
     image: postgres:10.4-alpine
     environment:
-      POSTGRES_DB: django_service_blueprint
+      POSTGRES_DB: app_name
       POSTGRES_USER: root
       POSTGRES_PASSWORD: root
     volumes:
       - /var/lib/postgresql/data/
     restart: always
 
-  django_service_blueprint:
+  app_name:
     build:
       context: .
       dockerfile: Dockerfile
     entrypoint: bash /code/docker-entrypoint-dev.sh
-    container_name: django_service_blueprint
-    image: django_service_blueprint
+    container_name: app_name
+    image: app_name
     volumes:
       - .:/code
     ports:
       - "8080:8080"
     depends_on:
-      - postgres_django_rest_boilerplate
+      - postgres_db
     environment:
       ALLOWED_HOSTS: localhost,127.0.0.1,0.0.0.0
       CORS_ORIGIN_WHITELIST: localhost,127.0.0.1,0.0.0.0
       DATABASE_ENGINE: "postgresql"
-      DATABASE_NAME: "django_service_blueprint"
+      DATABASE_NAME: "app_name"
       DATABASE_USER: "root"
       DATABASE_PASSWORD: "root"
-      DATABASE_HOST: "postgres_django_rest_boilerplate"
+      DATABASE_HOST: "postgres_db"
       DATABASE_PORT: "5432"
       DEBUG: "True"
       JWT_PUBLIC_KEY_RSA_BIFROST: |-
