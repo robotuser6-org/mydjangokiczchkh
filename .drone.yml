@@ -15,7 +15,7 @@ pipeline:
       - pip install --upgrade pip
       - pip install -r requirements/ci.txt --no-cache-dir
       - bash scripts/wait-for-it.sh $${DATABASE_HOST} $${DATABASE_PORT}
-      - bash scripts/run-tests.sh --ci
+      - pytest -v
     environment:
       - DATABASE_ENGINE=postgresql
       - DATABASE_NAME=db
@@ -40,5 +40,5 @@ pipeline:
     insecure: true
     file: Dockerfile
     when:
-      event: [tag]
+      event: [push, tag]
       status: [success]
