@@ -1,9 +1,9 @@
 services:
-  docs:
+  blueprint:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: docs
+    container_name: blueprint
     depends_on:
     - postgres_db
     entrypoint: bash /code/docker-entrypoint-dev.sh
@@ -12,21 +12,18 @@ services:
       CORS_ORIGIN_WHITELIST: localhost,127.0.0.1,0.0.0.0
       DATABASE_ENGINE: postgresql
       DATABASE_HOST: postgres_db
-      DATABASE_NAME: docs
+      DATABASE_NAME: blueprint
       DATABASE_PASSWORD: root
       DATABASE_PORT: '5432'
       DATABASE_USER: root
       DEBUG: 'True'
       JWT_PUBLIC_KEY_RSA_BIFROST: '-----BEGIN PUBLIC KEY-----
-
         MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBALFc9NFZaOaSwUMPNektbtJqEjYZ6IRB
-
         qhqvJu1hKPYn9HYd75c0gIDYHJ9lb7QwQvg44aO27104rDK0xSstzL0CAwEAAQ==
-
         -----END PUBLIC KEY-----'
       SECRET_KEY: ww2aa^#2381%9&2pueqk+0ix=g)7h61##(o*mez6h(@b3a3
       STATIC_ROOT: /static/
-    image: docs
+    image: blueprint
     ports:
     - 8080:8080
     volumes:
@@ -34,7 +31,7 @@ services:
   postgres_db:
     container_name: postgres_db
     environment:
-      POSTGRES_DB: docs
+      POSTGRES_DB: blueprint
       POSTGRES_PASSWORD: root
       POSTGRES_USER: root
     healthcheck:

@@ -5,6 +5,9 @@ set -e
 
 bash scripts/wait-for-it.sh $DATABASE_HOST $DATABASE_PORT
 
+echo $(date -u) "- Installing dependencies"
+pip install -r requirements/ci.txt
+
 echo $(date -u) "- Migrating"
 python manage.py migrate
 
